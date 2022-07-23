@@ -8,12 +8,13 @@ android:padding="15dp">
     <TextView
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:id="@+id/txtIngredients" />
-
+     android:id="@+id/txtIngredient"
+        android:text=""/>
     <TextView
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:id="@+id/txtItemUnit"
+     android:id="@+id/txtIngredientUnit"
+        android:text=""
      />
 
 </LinearLayout>
