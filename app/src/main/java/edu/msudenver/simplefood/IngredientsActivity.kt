@@ -34,7 +34,6 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             holder.itemView.setOnClickListener(onClickListener)
             holder.itemView.setOnLongClickListener(onLongClickListener)
         }
-
         override fun getItemCount(): Int {
             return ingredient.size
         }
