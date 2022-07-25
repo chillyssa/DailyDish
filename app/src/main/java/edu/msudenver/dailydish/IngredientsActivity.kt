@@ -12,9 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
+    lateinit var recyclerView: RecyclerView
+    lateinit var dbHelper: DBHelper
+    private val ISO_FORMAT = DBHelper.ISO_FORMAT
+    private val USA_FORMAT = DBHelper.USA_FORMAT
 
     private inner class IngredientsHolder(view: View): RecyclerView.ViewHolder(view) {
         val txtIngredient: TextView = view.findViewById(R.id.txtIngredient)
@@ -23,7 +28,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     }
 
     //TODOd replace Item with whatever the model is.
-    private inner class IngredientAdapter(var ingredient: List<Ingredient>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<IngredientsHolder>() {
+    private inner class IngredientAdapter(var ingredientList: List<Ingredient>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<IngredientsHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.ingredients_list, parent, false)
@@ -32,7 +37,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
         override fun onBindViewHolder(holder: IngredientsHolder, position: Int) {
             //TODOd update item.name and item.category to correct variables.
-            val ingredient = ingredient[position]
+            val ingredient = ingredientList[position]
             holder.txtIngredient.text = ingredient.name
             holder.txtIngredientUnit.text = ingredient.categoryAsString()
 
@@ -41,13 +46,50 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             holder.itemView.setOnLongClickListener(onLongClickListener)
         }
         override fun getItemCount(): Int {
-            return ingredient.size
+            return ingredientList.size
         }
+    }
+
+    fun populateRecyclerView() {
+        val db = dbHelper.readableDatabase
+        val ingredientList = mutableListOf<Ingredient>()
+        val columns = arrayOf<String>("rowid, name, location, quantity, unit, addedDate, updatedDate")
+        val cursor = db.query(
+            "ingredients",
+            columns,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        with (cursor) {
+            while (moveToNext()) {
+                val id = getInt(0)
+                val name = getString(1)
+                val location = getInt(2)
+                val quantity= getInt(3)
+                val unit=getString(4)
+                val createdDate = ISO_FORMAT.parse(getString(5))
+                val updatedDate=  ISO_FORMAT.parse(getString(6))
+                val item = Ingredient(id, name, location,quantity, unit, createdDate, updatedDate)
+                ingredientList.add(item)
+
+            }
+        }
+
+        recyclerView.adapter = IngredientAdapter(ingredientList, this, this)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
+
+        dbHelper = DBHelper(this)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        populateRecyclerView()
     }
 
 

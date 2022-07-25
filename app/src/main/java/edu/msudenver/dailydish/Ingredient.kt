@@ -24,7 +24,7 @@ class Ingredient(
         const val FREEZER = 3
 
 
-        val LOCATION_DESCRIPTIONS = arrayOf(
+        val LOCATION_DESCRIPTIONS = arrayOf(null,
             "Pantry",
             "Refrigerator",
             "Freezer"
@@ -32,7 +32,7 @@ class Ingredient(
 
     }
 
-    fun categoryAsString(): String {
+    fun categoryAsString(): String? {
         return LOCATION_DESCRIPTIONS[location]
     }
 
