@@ -23,7 +23,8 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
     private inner class IngredientsHolder(view: View): RecyclerView.ViewHolder(view) {
         val txtIngredient: TextView = view.findViewById(R.id.txtIngredient)
-        val txtIngredientUnit: TextView = view.findViewById(R.id.txtIngredientUnit)
+        val txtIngredientAmount: TextView = view.findViewById(R.id.txtIngredientAmount)
+        val txtIngredientLocation: TextView = view.findViewById(R.id.txtIngredientLocation)
 
     }
 
@@ -39,7 +40,9 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             //TODOd update item.name and item.category to correct variables.
             val ingredient = ingredientList[position]
             holder.txtIngredient.text = ingredient.name
-            holder.txtIngredientUnit.text = ingredient.categoryAsString()
+            holder.txtIngredientAmount.text = ingredient.quantity.toString() +" "+ ingredient.unit
+            holder.txtIngredientLocation.text = ingredient.categoryAsString()
+                    ingredient.categoryAsString()
 
 
             holder.itemView.setOnClickListener(onClickListener)
