@@ -1,4 +1,10 @@
-package edu.msudenver.simplefood
+package edu.msudenver.dailydish
+/*
+ * CS3013 - Mobile App Dev. - Summer 2022
+ * Instructor: Thyago Mota
+ * Student(s): Brea Chaney, Karent Correa and Alyssa Williams
+ * Description: DailyDish - Ingredients Activity for user ingredients list
+ */
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,8 +22,8 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
     }
 
-    //TODO replace Item with whatever the model is.
-    private inner class IngredientAdapter(var ingredient: List<Item>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<IngredientsHolder>() {
+    //TODOd replace Item with whatever the model is.
+    private inner class IngredientAdapter(var ingredient: List<Ingredient>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<IngredientsHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.ingredients_list, parent, false)
@@ -25,7 +31,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         }
 
         override fun onBindViewHolder(holder: IngredientsHolder, position: Int) {
-            //TODO update item.name and item.category to correct variables.
+            //TODOd update item.name and item.category to correct variables.
             val ingredient = ingredient[position]
             holder.txtIngredient.text = ingredient.name
             holder.txtIngredientUnit.text = ingredient.categoryAsString()
