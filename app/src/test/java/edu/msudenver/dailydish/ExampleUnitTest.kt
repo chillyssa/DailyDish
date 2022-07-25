@@ -1,4 +1,4 @@
-package edu.msudenver.simplefood
+package edu.msudenver.dailydish
 
 import org.junit.Test
 
