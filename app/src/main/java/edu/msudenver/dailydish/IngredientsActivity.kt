@@ -27,6 +27,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         val txtIngredient: TextView = view.findViewById(R.id.txtIngredient)
         val txtIngredientAmount: TextView = view.findViewById(R.id.txtIngredientAmount)
         val txtIngredientLocation: TextView = view.findViewById(R.id.txtIngredientLocation)
+        val txtIngredientId: TextView = view.findViewById(R.id.txtIngredientId)
 
     }
 
@@ -35,6 +36,10 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.ingredients_list, parent, false)
+
+
+            view.setOnClickListener(onClickListener)
+            view.setOnLongClickListener(onLongClickListener)
             return IngredientsHolder(view)
         }
 
@@ -44,11 +49,9 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             holder.txtIngredient.text = ingredient.name
             holder.txtIngredientAmount.text = ingredient.quantity.toString() +" "+ ingredient.unit
             holder.txtIngredientLocation.text = ingredient.categoryAsString()
-                    ingredient.categoryAsString()
+            holder.txtIngredientId.text = ingredient.id.toString()
+            ingredient.categoryAsString()
 
-
-            holder.itemView.setOnClickListener(onClickListener)
-            holder.itemView.setOnLongClickListener(onLongClickListener)
         }
         override fun getItemCount(): Int {
             return ingredientList.size
