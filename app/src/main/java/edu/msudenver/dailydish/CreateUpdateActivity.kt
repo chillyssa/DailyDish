@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 
 class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
@@ -31,6 +33,15 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_update)
+
+        val edtIngredientName = findViewById<EditText>(R.id.edtIngredientName)
+        val edtIngredientAmount= findViewById<EditText>(R.id.edtIngredientAmount)
+        val editIngredientUnit= findViewById<EditText>(R.id.edtIngredientUnit)
+        val spnIngredientLocation = findViewById<Spinner>(R.id.spnIngredientLocation)
+        val ingredientUpdateId= findViewById<TextView>(R.id.ingredientUpdateID)
+
+        spnIngredientLocation.adapter = ArrayAdapter<String>(this, R.layout.spinner_ingredients, Ingredient.LOCATION_DESCRIPTIONS)
+
 
 
     }
