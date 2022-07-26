@@ -6,13 +6,17 @@ package edu.msudenver.dailydish
  * Description: DailyDish - Ingredients Activity for user ingredients list
  */
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.database.sqlite.SQLiteException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -125,6 +129,39 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     }
 
     override fun onLongClick(v: View?): Boolean {
-        TODO("Not yet implemented")
+        class MyDialogInterfaceListener(val id: Int): DialogInterface.OnClickListener {
+
+            override fun onClick(dialogInterface: DialogInterface?, which: Int) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    try {
+                        val db = dbHelper.writableDatabase
+                        db.execSQL("""
+                            DELETE FROM ingredients
+                            WHERE rowid = $id
+                        """)
+                        populateRecyclerView()
+
+                    } catch (ex: SQLiteException) {
+                        Log.i("Error: ", ex.toString())
+                    }
+                }
+            }
+        }
+
+        if (v!= null) {
+            val desc = v.findViewById<TextView>(R.id.txtIngredient).text.toString()
+            val id = v.findViewById<TextView>(R.id.txtIngredientId).text.toString().toInt()
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setMessage("Are you sure you want to delete the following item from your bucket list?:\n\n${desc}")
+            alertDialogBuilder.setPositiveButton("Yes", MyDialogInterfaceListener(id))
+            alertDialogBuilder.setNegativeButton("No", MyDialogInterfaceListener(id))
+            alertDialogBuilder.show()
+            return true
+        }
+        return false
     }
-}
+
+
+
+
+    }
