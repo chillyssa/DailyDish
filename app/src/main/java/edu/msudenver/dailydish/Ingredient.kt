@@ -24,7 +24,7 @@ class Ingredient(
         const val FREEZER = 3
 
 
-        val LOCATION_DESCRIPTIONS = arrayOf(null,
+        val LOCATION_DESCRIPTIONS = arrayOf( null,
             "Pantry",
             "Refrigerator",
             "Freezer"

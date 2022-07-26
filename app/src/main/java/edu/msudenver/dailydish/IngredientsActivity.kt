@@ -6,6 +6,7 @@ package edu.msudenver.dailydish
  * Description: DailyDish - Ingredients Activity for user ingredients list
  */
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
     lateinit var recyclerView: RecyclerView
@@ -93,11 +95,30 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         populateRecyclerView()
+
+        val fabCreate: FloatingActionButton = findViewById(R.id.fabCreate)
+        fabCreate.setOnClickListener {
+
+            val intent = Intent(this, CreateUpdateActivity::class.java)
+            intent.putExtra("op", CreateUpdateActivity.CREATE_OP)
+            startActivity(intent)
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        populateRecyclerView()
     }
 
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        if (v != null) {
+            val rowid = v.findViewById<TextView>(R.id.txtIngredientId).text.toString().toInt()
+            val intent = Intent(this, CreateUpdateActivity::class.java)
+            intent.putExtra("op", CreateUpdateActivity.UPDATE_OP)
+            intent.putExtra("rowid", rowid)
+            startActivity(intent)
+
+        }
     }
 
     override fun onLongClick(v: View?): Boolean {
