@@ -19,9 +19,9 @@ class Ingredient(
     updatedDate: Date) {
 
     companion object {
-        const val PANTRY = 1
-        const val REFRIGERATOR = 2
-        const val FREEZER = 3
+        const val PANTRY = 0
+        const val REFRIGERATOR = 1
+        const val FREEZER = 2
 
 
         val LOCATION_DESCRIPTIONS = arrayOf(
@@ -32,7 +32,7 @@ class Ingredient(
 
     }
 
-    fun categoryAsString(): String {
+    fun categoryAsString(): String? {
         return LOCATION_DESCRIPTIONS[location]
     }
 
