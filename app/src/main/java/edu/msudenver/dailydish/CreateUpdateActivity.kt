@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import java.util.*
 
 class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -57,11 +58,10 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
         op = intent.getIntExtra("op", CREATE_OP)
 
 
+
+        // TODO: finish else statement to pass the location to the spinner and the ingredient name, unit and amount to the view elements.
         if (op == CREATE_OP) {
             btnCreateUpdate.text = "CREATE INGREDIENT"
-           // spnIngredientLocation.setSelection(Ingredient.LOCATION_DESCRIPTIONS)
-           // spnIngredientLocation.isEnabled = false
-
         }
 
         else {
@@ -81,7 +81,16 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
     override fun onClick(v: View?) {
+        val currentDate = ISO_FORMAT.format(Date())
         TODO("Not yet implemented")
+        if (op == CREATE_OP) {
+            //TODO: Add functionality to INSERT a new item into the ingredients table. makes sure to use current date for addedDate and updatedDate
+        }
+        else {
+            //TODO: Add functionality to UPDATE the clicked item. Updated date should be current date.
+
+        }
     }
 }
