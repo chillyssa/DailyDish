@@ -18,6 +18,11 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+        //TODO: set up recycler
+        //TODO: Create SpoonacularAPI object to make api calls
+
+        //TODO: Call to spc to get recipes by ingredients
+        //TODO: Call to spc by recipe id to get url and send user to external url via intents
 
     }
 }
