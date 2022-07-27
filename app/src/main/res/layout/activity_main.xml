@@ -7,9 +7,6 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:background="@drawable/cooking"
-
-
-
   >
 
 
