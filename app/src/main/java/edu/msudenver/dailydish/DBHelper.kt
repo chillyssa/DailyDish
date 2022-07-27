@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.io.Serializable
 import java.text.SimpleDateFormat
+import java.util.*
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION), Serializable {
 
@@ -32,18 +33,18 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null,
                 addedDate   TEXT NOT NULL, 
                 updatedDate TEXT)
         """)
-
+        val currentDate = ISO_FORMAT.format(Date())
         // populate the table with a few items
         db?.execSQL("""
             INSERT INTO ingredients VALUES 
-                ("flour", ${Ingredient.PANTRY}, 5, "pound(s)"),
-                ("milk", ${Ingredient.REFRIGERATOR}, 1, "gallon"), 
-                ("granulated sugar", ${Ingredient.PANTRY}, 1, "pound(s)"),
-                ("butter", ${Ingredient.REFRIGERATOR}, 2, "pound(s)"),
-                ("baking soda", ${Ingredient.PANTRY}, 1, "box"), 
-                ("baking powder", ${Ingredient.PANTRY}, 1, "container"),
-                ("chocolate chips", ${Ingredient.PANTRY}, 12, "ounces"), 
-                ("brown sugar", ${Ingredient.FREEZER}, 1, "pound(s)")
+                ("flour", ${Ingredient.PANTRY}, 5, "pound(s)", "$currentDate", "$currentDate"),
+                ("milk", ${Ingredient.REFRIGERATOR}, 1, "gallon", "$currentDate", "$currentDate"), 
+                ("granulated sugar", ${Ingredient.PANTRY}, 1, "pound(s)", "$currentDate", "$currentDate"),
+                ("butter", ${Ingredient.REFRIGERATOR}, 2, "pound(s)", "$currentDate", "$currentDate"),
+                ("baking soda", ${Ingredient.PANTRY}, 1, "box", "$currentDate", "$currentDate"), 
+                ("baking powder", ${Ingredient.PANTRY}, 1, "container", "$currentDate", "$currentDate"),
+                ("chocolate chips", ${Ingredient.PANTRY}, 12, "ounces", "$currentDate", "$currentDate"), 
+                ("brown sugar", ${Ingredient.FREEZER}, 1, "pound(s)", "$currentDate", "$currentDate")
         """)
     }
 
