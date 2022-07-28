@@ -18,13 +18,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Ingredient Name: "
+                android:text="Ingredient: "
+                android:fontFamily="@font/roboto_medium"
                 />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:width="100dp"
+                android:fontFamily="@font/roboto_thin"
                 android:id="@+id/edtIngredientName"/>
 
         </LinearLayout>
@@ -37,13 +40,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Amount: " />
+                android:text="Amount: "
+                android:fontFamily="@font/roboto_medium"/>
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:id="@+id/edtIngredientAmount"/>
+                android:id="@+id/edtIngredientAmount"
+                android:fontFamily="@font/roboto_thin"
+                android:width="100dp"/>
 
         </LinearLayout>
 
@@ -56,13 +62,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Unit: " />
+                android:text="Unit: "
+                android:fontFamily="@font/roboto_medium"/>
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:id="@+id/edtIngredientUnit"/>
+                android:id="@+id/edtIngredientUnit"
+                android:fontFamily="@font/roboto_thin"
+                android:width="100dp"/>
             <TextView
                 android:id="@+id/ingredientUpdateID"
                 android:layout_width="wrap_content"
@@ -80,17 +89,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location: "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:fontFamily="@font/roboto_medium"/>
 
         <Spinner
             android:id="@+id/spnIngredientLocation"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnCreateUpdate" />
+            android:id="@+id/btnCreateUpdate"
+            android:fontFamily="@font/roboto_medium"/>
     </LinearLayout>
 
 </ScrollView>
