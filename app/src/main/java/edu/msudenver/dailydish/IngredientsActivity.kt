@@ -9,7 +9,6 @@ package edu.msudenver.dailydish
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.sqlite.SQLiteException
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -100,7 +101,9 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
         dbHelper = DBHelper(this)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        //recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         populateRecyclerView()
 
         val fabCreate: FloatingActionButton = findViewById(R.id.fabCreate)
