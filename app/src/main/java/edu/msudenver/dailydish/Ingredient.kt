@@ -15,8 +15,8 @@ class Ingredient(
     var location: Int,
     var quantity: Int,
     var unit: String,
-    addedDate: Date,
-    updatedDate: Date) {
+    var addedDate: Date,
+    var updatedDate: Date) {
 
     companion object {
         const val PANTRY = 0
@@ -37,8 +37,8 @@ class Ingredient(
     }
 
     override fun toString(): String {
-        return "Ingredient(name='$name', location=$location, quantity=$quantity, unit='$unit')"
-        //TODO: add added date=$addedDate, updated date= $updatedDate to toString return call
+        return "Ingredient(name='$name', location=$location, quantity=$quantity, unit='$unit, added data=$addedDate, updated date=$updatedDate')"
+        //TO-DO: add added date=$addedDate, updated date= $updatedDate to toString return call
     }
 
 

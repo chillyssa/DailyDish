@@ -9,7 +9,6 @@
     android:background="@drawable/cooking"
   >
 
-
   <Button
       android:id="@+id/btnIngredients"
       android:layout_width="wrap_content"
