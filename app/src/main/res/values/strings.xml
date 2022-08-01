@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DailyDish</string>
+    <string name="testAPICall">chicken</string>
 </resources>

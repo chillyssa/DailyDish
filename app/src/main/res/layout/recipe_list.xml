@@ -6,18 +6,33 @@
     android:padding="15dp">
 
     <TextView
+        android:id="@+id/recipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtRecipeDescription" />
+        android:text="Recipe Name: " />
 
     <TextView
+        android:id="@+id/missedIngredientCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtRecipeIngredients"
-        />
+        android:text="Missed Ingredient Count: " />
+
     <TextView
+        android:id="@+id/usedIngredientCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtRecipeURL"
-        />
+        android:text="Ingredients Used Count: " />
+
+    <TextView
+        android:id="@+id/recipeIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients: " />
+
+    <TextView
+        android:id="@+id/recipeURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View full recipe on the web: " />
+
 </LinearLayout>
