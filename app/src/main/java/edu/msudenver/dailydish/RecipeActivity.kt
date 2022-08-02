@@ -27,7 +27,7 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
     lateinit var dbHelper: DBHelper
     lateinit var db: SQLiteDatabase
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
-    val ingredientNames = mutableListOf<String>()
+    var ingredientNames = mutableListOf<String>()
 
     // Create the recipe holder view for the recycler view for all recipe information to display
     private inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -72,13 +72,19 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+
+
+        //get the intent.
+        ingredientNames = intent.getStringArrayListExtra("selectedIngredientList")!!
+
+
         // Create and populate the recycler view
         dbHelper = DBHelper(this)
         recyclerView = findViewById<RecyclerView>(R.id.recipeRV)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Call to retrieve all ingredient names from ingredients table to use as query string
-        retrieveIngName()
+      //  retrieveIngName()
 
         //TODOd: Create SpoonacularAPI object to make api calls
         val spnAPI = SpoonacularAPI.create()
