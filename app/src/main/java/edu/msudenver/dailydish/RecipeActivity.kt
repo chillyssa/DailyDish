@@ -154,6 +154,7 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
             null,
             null
         )
+
         with(cursor) {
             while (moveToNext()) {
                 val id = getInt(0)
