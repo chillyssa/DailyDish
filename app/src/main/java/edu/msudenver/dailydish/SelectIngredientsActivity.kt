@@ -19,6 +19,8 @@ import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.msudenver.dailydish.Models.DBHelper
+import edu.msudenver.dailydish.Models.Ingredient
 
 
 class SelectIngredientsActivity : AppCompatActivity() {

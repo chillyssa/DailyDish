@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="15dp">
 
+
     <TextView
         android:id="@+id/recipeName"
         android:layout_width="match_parent"
@@ -28,11 +29,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ingredients: " />
-
     <TextView
-        android:id="@+id/recipeURL"
+        android:id="@+id/recipeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/viewRecipeBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View full recipe on the web: " />
+        android:layout_gravity="center"
+        android:textColor="#808080"
+        android:text="View Recipe"
+        android:clickable="false"/>
+
+
 
 </LinearLayout>

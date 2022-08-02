@@ -15,56 +15,61 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.msudenver.dailydish.Models.DBHelper
+import edu.msudenver.dailydish.Models.Ingredient
+import edu.msudenver.dailydish.Models.RecipeById
+import kotlinx.android.synthetic.main.recipe_list.view.*
 import retrofit2.Call
 import retrofit2.Callback
 
-class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
+class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array<Response>> {
 
     lateinit var recyclerView: RecyclerView
     lateinit var dbHelper: DBHelper
     lateinit var db: SQLiteDatabase
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
-    var ingredientNames = mutableListOf<String>()
+    val ingredientNames = mutableListOf<String>()
+    var recipeID = ""
 
     // Create the recipe holder view for the recycler view for all recipe information to display
-    private inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName: TextView = view.findViewById(R.id.recipeName)
         val missedIngCt: TextView = view.findViewById(R.id.missedIngredientCount)
         val usedIngCt: TextView = view.findViewById(R.id.usedIngredientCount)
         val ingredients: TextView = view.findViewById(R.id.recipeIngredients)
-        val recipeURL: TextView =
-            view.findViewById(R.id.recipeURL) // TODO: update this to a clickable URL
+        val recipeID: TextView = view.findViewById(R.id.recipeID)
     }
 
     //RecipeAdapter uses the Response data to set the view to the recipe information
-    private inner class RecipeAdapter(var recipe: Array<Response>) :
+    inner class RecipeAdapter(var recipeByIng: Array<Response>, var onClickListener: View.OnClickListener) :
         RecyclerView.Adapter<RecipeHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.recipe_list, parent, false)
+            // TODO: set onclick listener for recycler view for viewing a full recipe
+            view.setOnClickListener(onClickListener)
             return RecipeHolder(view)
         }
 
         override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
 
-            val recipe = recipe[position]
+            val recipe = recipeByIng[position]
             for (name in recipe.usedIngredients.iterator()) {
-                val ingredients = name.name
-                holder.ingredients.text = "Ingredients used from your list: $ingredients"
+                holder.ingredients.text = "Ingredients used from your list: ${name.name}"
             }
             holder.recipeName.text = "Recipe: ${recipe.title}"
             holder.missedIngCt.text = "No. Missing Ingredients: ${recipe.missedIngredientCount}"
             holder.usedIngCt.text = "No. Used Ingredients: ${recipe.usedIngredientCount}"
-            holder.recipeURL.text =
-                "URL: ${recipe.image}" //TODO: this is currently the image url. we need to get the recieps Url in a different call.
+            holder.recipeID.text = recipe.id.toString()
         }
 
         override fun getItemCount(): Int {
-            return recipe.size
+            return recipeByIng.size
         }
     }
 
@@ -88,7 +93,6 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
 
         //TODOd: Create SpoonacularAPI object to make api calls
         val spnAPI = SpoonacularAPI.create()
-
         //concatenate ingredient names from ingredients table into query string
         var query = ""
         for(name in ingredientNames){
@@ -118,7 +122,13 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
         val res = response.body()!!
         // if response not null passes the result set into the recipe adapter to display the resulting data in the view elements
         if(res !=null){
-            recyclerView.adapter = RecipeAdapter(res)
+
+            recyclerView.adapter = RecipeAdapter(res, this)
+            // grab a reference to the recipe ID.
+            for(response in res.iterator()){
+                recipeID = response.id.toString()
+                println("RECIPE ID: $recipeID")
+            }
         } else{
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Your search returned no results :(")
@@ -171,4 +181,18 @@ class RecipeActivity : AppCompatActivity(), Callback<Array<Response>> {
         }
         return ingredientNames
     }
+
+    // TODO: Pass recipe id of clicked recipe to new Activity RecipeByIDActivity in intent and start activity
+    override fun onClick(view: View?) {
+        if (view != null) {
+            val recipeID = view.findViewById<TextView>(R.id.recipeID).text.toString().toInt()
+            val intent = Intent(this, RecipeInfoActivity::class.java)
+            intent.putExtra("recipeID", recipeID)
+            startActivity(intent)
+        }
+    }
+
 }
+
+
+

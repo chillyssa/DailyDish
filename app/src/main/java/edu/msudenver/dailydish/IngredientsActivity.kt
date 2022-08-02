@@ -18,9 +18,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import edu.msudenver.dailydish.Models.DBHelper
+import edu.msudenver.dailydish.Models.Ingredient
 
 class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
     lateinit var recyclerView: RecyclerView
