@@ -8,25 +8,30 @@ package edu.msudenver.dailydish
  */
 
 import android.content.Intent
+import android.graphics.ColorSpace.Model
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 
 class SelectIngredientsActivity : AppCompatActivity() {
 
     private lateinit var ingredientRV: RecyclerView
     private lateinit var dbHelper: DBHelper
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
+    var selectedIngredientList= ArrayList<String>()
 
     // Ingredient selection holder view for the recycler view for all recipe information to display
     private inner class SelectionHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ingCB: CheckBox = view.findViewById(R.id.ingCB)
+
     }
 
     //SelectionAdapter uses the Response data to set the view to the ingredients in the ingredient table
@@ -36,18 +41,33 @@ class SelectIngredientsActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectionHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.search_by_list, parent, false)
+
             return SelectionHolder(view)
         }
 
         override fun onBindViewHolder(holder: SelectionHolder, position: Int) {
             val ingredient = ingredientList[position]
+
+
             holder.ingCB.text = ingredient.name
+
+            // adds or removes items to the selectedIngredientList based on whether it's been clicked.
+            holder.ingCB.setOnCheckedChangeListener{ _, isChecked ->
+                if (isChecked) {
+                    selectedIngredientList.add(ingredient.name)
+                } else {
+                    selectedIngredientList.remove(ingredient.name)
+                }
+            }
+
+
         }
 
         override fun getItemCount(): Int {
             return ingredientList.size
         }
     }
+
 
     private fun populateRecyclerView() {
         val db = dbHelper.readableDatabase
@@ -78,7 +98,7 @@ class SelectIngredientsActivity : AppCompatActivity() {
             }
         }
         ingredientRV.adapter = SelectionAdapter(ingredientList)
-        println("Ingredients: $ingredientList")
+
 
     }
 
@@ -98,6 +118,9 @@ class SelectIngredientsActivity : AppCompatActivity() {
             // pass intent to RecipeActivity on click of get recipes button
             // TODO: putExtra such that the checked ingredient names are passed with the intents
             val intent = Intent(this, RecipeActivity::class.java)
+            intent.putExtra("selectedIngredientList", selectedIngredientList)
+            println(selectedIngredientList)
+            println("TEST")
             startActivity(intent)
         }
     }
