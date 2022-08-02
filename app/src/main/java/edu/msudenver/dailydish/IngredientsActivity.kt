@@ -28,7 +28,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
     private val USA_FORMAT = DBHelper.USA_FORMAT
 
-    private inner class IngredientsHolder(view: View): RecyclerView.ViewHolder(view) {
+    private inner class IngredientsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtIngredient: TextView = view.findViewById(R.id.txtIngredient)
         val txtIngredientAmount: TextView = view.findViewById(R.id.txtIngredientAmount)
         val txtIngredientLocation: TextView = view.findViewById(R.id.txtIngredientLocation)
@@ -37,10 +37,15 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     }
 
     //TODOd replace Item with whatever the model is.
-    private inner class IngredientAdapter(var ingredientList: List<Ingredient>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<IngredientsHolder>() {
+    private inner class IngredientAdapter(
+        var ingredientList: List<Ingredient>,
+        var onClickListener: View.OnClickListener,
+        var onLongClickListener: View.OnLongClickListener
+    ) : RecyclerView.Adapter<IngredientsHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.ingredients_list, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.ingredients_list, parent, false)
 
 
             view.setOnClickListener(onClickListener)
@@ -52,12 +57,13 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             //TODOd update item.name and item.category to correct variables.
             val ingredient = ingredientList[position]
             holder.txtIngredient.text = ingredient.name
-            holder.txtIngredientAmount.text = ingredient.quantity.toString() +" "+ ingredient.unit
+            holder.txtIngredientAmount.text = ingredient.quantity.toString() + " " + ingredient.unit
             holder.txtIngredientLocation.text = ingredient.categoryAsString()
             holder.txtIngredientId.text = ingredient.id.toString()
             ingredient.categoryAsString()
 
         }
+
         override fun getItemCount(): Int {
             return ingredientList.size
         }
@@ -66,7 +72,8 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     fun populateRecyclerView() {
         val db = dbHelper.readableDatabase
         val ingredientList = mutableListOf<Ingredient>()
-        val columns = arrayOf<String>("rowid, name, location, quantity, unit, addedDate, updatedDate")
+        val columns =
+            arrayOf<String>("rowid, name, location, quantity, unit, addedDate, updatedDate")
         val cursor = db.query(
             "ingredients",
             columns,
@@ -76,16 +83,16 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             null,
             null
         )
-        with (cursor) {
+        with(cursor) {
             while (moveToNext()) {
                 val id = getInt(0)
                 val name = getString(1)
                 val location = getInt(2)
-                val quantity= getInt(3)
-                val unit=getString(4)
+                val quantity = getInt(3)
+                val unit = getString(4)
                 val createdDate = ISO_FORMAT.parse(getString(5))
-                val updatedDate=  ISO_FORMAT.parse(getString(6))
-                val item = Ingredient(id, name, location,quantity, unit, createdDate, updatedDate)
+                val updatedDate = ISO_FORMAT.parse(getString(6))
+                val item = Ingredient(id, name, location, quantity, unit, createdDate, updatedDate)
                 ingredientList.add(item)
 
             }
@@ -114,6 +121,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             startActivity(intent)
         }
     }
+
     override fun onResume() {
         super.onResume()
         populateRecyclerView()
@@ -132,16 +140,18 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     }
 
     override fun onLongClick(v: View?): Boolean {
-        class MyDialogInterfaceListener(val id: Int): DialogInterface.OnClickListener {
+        class MyDialogInterfaceListener(val id: Int) : DialogInterface.OnClickListener {
 
             override fun onClick(dialogInterface: DialogInterface?, which: Int) {
                 if (which == DialogInterface.BUTTON_POSITIVE) {
                     try {
                         val db = dbHelper.writableDatabase
-                        db.execSQL("""
+                        db.execSQL(
+                            """
                             DELETE FROM ingredients
                             WHERE rowid = $id
-                        """)
+                        """
+                        )
                         populateRecyclerView()
 
                     } catch (ex: SQLiteException) {
@@ -151,7 +161,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             }
         }
 
-        if (v!= null) {
+        if (v != null) {
             val desc = v.findViewById<TextView>(R.id.txtIngredient).text.toString()
             val id = v.findViewById<TextView>(R.id.txtIngredientId).text.toString().toInt()
             val alertDialogBuilder = AlertDialog.Builder(this)
@@ -165,6 +175,4 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     }
 
 
-
-
-    }
+}
