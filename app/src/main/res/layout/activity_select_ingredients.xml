@@ -9,27 +9,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Top 10 recipes for you"
+        android:text="Search Recipes by Your Ingredients"
         android:textSize="20dp"
         android:textStyle="bold" />
-    <Button
-        android:id="@+id/newSearchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="New Search"
-        android:textColor="#808080" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeRV"
+            android:id="@+id/ingredientRV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp" />
     </FrameLayout>
+
+    <Button
+        android:id="@+id/getRecipesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Get Recipes"
+        android:textColor="#808080" />
 
 </LinearLayout>
