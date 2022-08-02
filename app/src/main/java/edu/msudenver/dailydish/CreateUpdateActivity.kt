@@ -6,13 +6,14 @@ package edu.msudenver.dailydish
  * Description: DailyDish - Create and Update Activity for user ingredients list
  */
 
-import android.content.ClipData
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import edu.msudenver.dailydish.Models.DBHelper
+import edu.msudenver.dailydish.Models.Ingredient
 import kotlinx.android.synthetic.main.activity_create_update.*
 import java.util.*
 

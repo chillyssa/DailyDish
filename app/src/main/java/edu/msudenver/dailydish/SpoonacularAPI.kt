@@ -23,6 +23,14 @@ interface SpoonacularAPI {
         @Query("ranking") ranking: Int
     ): Call<Array<Response>> // the call must be an Array of Response objects as that is how the results are returned from the api
 
+    //GET call to Spoonacular API to look up a recipe by ID
+    @GET("information?")
+    fun recipeByID(
+        @Query("id") id: Int,
+        @Query("apiKey") apiKey: String,
+        @Query("includeNutrition") includeNutrition: Boolean = false,
+    )
+
     companion object {
         val BASE_URL = "https://api.spoonacular.com/recipes/"
         fun create(): SpoonacularAPI {

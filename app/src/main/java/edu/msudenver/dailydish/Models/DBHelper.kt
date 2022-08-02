@@ -1,4 +1,4 @@
-package edu.msudenver.dailydish
+package edu.msudenver.dailydish.Models
 /*
  * CS3013 - Mobile App Dev. - Summer 2022
  * Instructor: Thyago Mota
