@@ -77,13 +77,19 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+
+
+        //get the intent.
+        ingredientNames = intent.getStringArrayListExtra("selectedIngredientList")!!
+
+
         // Create and populate the recycler view
         dbHelper = DBHelper(this)
         recyclerView = findViewById<RecyclerView>(R.id.recipeRV)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Call to retrieve all ingredient names from ingredients table to use as query string
-        retrieveIngName()
+      //  retrieveIngName()
 
         //TODOd: Create SpoonacularAPI object to make api calls
         val spnAPI = SpoonacularAPI.create()
@@ -158,6 +164,7 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
             null,
             null
         )
+
         with(cursor) {
             while (moveToNext()) {
                 val id = getInt(0)
