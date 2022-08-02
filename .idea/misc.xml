@@ -6,13 +6,12 @@
         <entry key="app/src/main/res/layout/activity_create_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ingredients.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_recipe.xml" value="0.1994535519125683" />
-        <entry key="app/src/main/res/layout/activity_select_ingredients.xml" value="0.2246376811594203" />
+        <entry key="app/src/main/res/layout/activity_recipe.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_select_ingredients.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/ingredients_list.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/layout.xml" value="0.2246376811594203" />
         <entry key="app/src/main/res/layout/recipe_list.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/recycler_view_test.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/search_by_list.xml" value="0.2246376811594203" />
+        <entry key="app/src/main/res/layout/search_by_list.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/spinner_ingredients.xml" value="0.1" />
       </map>
     </option>
