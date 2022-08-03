@@ -16,7 +16,7 @@ implementation` 'com.squareup.retrofit2:converter-gson:2.9.0'
 Add these to your app/build.gradle:
 `id 'kotlin-android-extensions'`
 ### Additional Build Info
-Add this to your app/build.gradle at the end of the `defaultConfig{ }` within `android { }` configuration:
+Add this to your app/build.gradle at the end of the `defaultConfig{ }` within `android { }` configuration (screen shot below):
 ```
 Properties properties = new Properties()
 properties.load(project.rootProject.file("local.properties").newDataInputStream())
