@@ -16,10 +16,12 @@ implementation` 'com.squareup.retrofit2:converter-gson:2.9.0'
 Add these to your app/build.gradle:
 `id 'kotlin-android-extensions'`
 ### Additional Build Info
-Add this to your app/build.gradle within the ` android { }` configuration:
+Add this to your app/build.gradle at the end of the `defaultConfig{ }` within `android { }` configuration:
 ```
 Properties properties = new Properties()
 properties.load(project.rootProject.file("local.properties").newDataInputStream())
 buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
 ```
 This allows you to hide your API Key as a property in your `local.properties` file like so: `API_KEY = yourKeyHere`
+
+![buildConfigShare](https://user-images.githubusercontent.com/38333607/182533429-4bdd563a-f075-4b28-be10-f7e6cf943d70.png)
