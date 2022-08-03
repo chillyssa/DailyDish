@@ -47,7 +47,9 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
             R.layout.spinner_ingredients,
             Ingredient.LOCATION_DESCRIPTIONS
         )
+
         spnIngredientLocation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(
@@ -73,7 +75,7 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
         if (op == CREATE_OP) {
             btnCreateUpdate.text = "CREATE INGREDIENT"
             spnIngredientLocation.setSelection(0)
-            spnIngredientLocation.isEnabled = false
+            spnIngredientLocation.isEnabled = true
         } else {
             btnCreateUpdate.text = "UPDATE INGREDIENT"
             val id = intent.getIntExtra("rowid", -1)
@@ -82,7 +84,7 @@ class CreateUpdateActivity : AppCompatActivity(), View.OnClickListener {
             edtIngredientAmount.setText(ingredient.quantity.toString())
             edtIngredientUnit.setText(ingredient.unit)
             spnIngredientLocation.setSelection(ingredient.location)
-            spnIngredientLocation.isEnabled = true
+            spnIngredientLocation.isEnabled = false
         }
     }
 

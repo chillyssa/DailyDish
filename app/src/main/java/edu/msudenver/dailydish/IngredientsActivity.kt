@@ -167,7 +167,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
             val desc = v.findViewById<TextView>(R.id.txtIngredient).text.toString()
             val id = v.findViewById<TextView>(R.id.txtIngredientId).text.toString().toInt()
             val alertDialogBuilder = AlertDialog.Builder(this)
-            alertDialogBuilder.setMessage("Are you sure you want to delete the following item from your bucket list?:\n\n${desc}")
+            alertDialogBuilder.setMessage("Are you sure you want to delete the following item from your list?:\n\n${desc}")
             alertDialogBuilder.setPositiveButton("Yes", MyDialogInterfaceListener(id))
             alertDialogBuilder.setNegativeButton("No", MyDialogInterfaceListener(id))
             alertDialogBuilder.show()
