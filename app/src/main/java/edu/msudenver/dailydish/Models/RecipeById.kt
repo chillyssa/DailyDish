@@ -1,5 +1,12 @@
 package edu.msudenver.dailydish.Models
 
+/*
+ * CS3013 - Mobile App Dev. - Summer 2022
+ * Instructor: Thyago Mota
+ * Student(s): Brea Chaney, Karent Correa and Alyssa Williams
+ * Description: DailyDish - RecipeById holds data class for Search Recipe by ID response
+ */
+
 data class RecipeById (
     var vegetarian: Boolean,
     var vegan: Boolean,

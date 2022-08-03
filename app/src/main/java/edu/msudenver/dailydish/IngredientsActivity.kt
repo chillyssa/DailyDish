@@ -27,8 +27,8 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
     lateinit var recyclerView: RecyclerView
     lateinit var dbHelper: DBHelper
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
-    private val USA_FORMAT = DBHelper.USA_FORMAT
 
+    // Create and Ingredient Holder for the recycler view
     private inner class IngredientsHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtIngredient: TextView = view.findViewById(R.id.txtIngredient)
         val txtIngredientAmount: TextView = view.findViewById(R.id.txtIngredientAmount)
@@ -37,7 +37,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
 
     }
 
-    //TODOd replace Item with whatever the model is.
+    // Ingredient Adapter for the recycler view
     private inner class IngredientAdapter(
         var ingredientList: List<Ingredient>,
         var onClickListener: View.OnClickListener,
@@ -47,15 +47,14 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientsHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.ingredients_list, parent, false)
-
-
+            // OnClick and OnLongClick listeners for updating ingredient/deleting ingredient
             view.setOnClickListener(onClickListener)
             view.setOnLongClickListener(onLongClickListener)
             return IngredientsHolder(view)
         }
 
         override fun onBindViewHolder(holder: IngredientsHolder, position: Int) {
-            //TODOd update item.name and item.category to correct variables.
+            // Set the views texts to the right values based on the ingredients table query
             val ingredient = ingredientList[position]
             holder.txtIngredient.text = ingredient.name
             holder.txtIngredientAmount.text = ingredient.quantity.toString() + " " + ingredient.unit
@@ -70,6 +69,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         }
     }
 
+    // query the ingredients table and set each record to a view holder with recycler view
     fun populateRecyclerView() {
         val db = dbHelper.readableDatabase
         val ingredientList = mutableListOf<Ingredient>()
@@ -107,16 +107,16 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients)
 
+        // Initialize db Helper and recyclerView
         dbHelper = DBHelper(this)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-
-        //recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         populateRecyclerView()
 
+        // Get a reference to the FAB create button to insert new ingredients
         val fabCreate: FloatingActionButton = findViewById(R.id.fabCreate)
         fabCreate.setOnClickListener {
-
+            // On click of the button, pass the activity to CreateUpdateActivity
             val intent = Intent(this, CreateUpdateActivity::class.java)
             intent.putExtra("op", CreateUpdateActivity.CREATE_OP)
             startActivity(intent)
@@ -128,7 +128,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         populateRecyclerView()
     }
 
-
+    // If the recycler view of one ingredient is selected, pass the intent to CreateUpdateActivity to update the ingredient
     override fun onClick(v: View?) {
         if (v != null) {
             val rowid = v.findViewById<TextView>(R.id.txtIngredientId).text.toString().toInt()
@@ -140,6 +140,7 @@ class IngredientsActivity : AppCompatActivity(), View.OnClickListener, View.OnLo
         }
     }
 
+    // If the long click is performed, delete the ingredient, first alerting the user to confirm deletion
     override fun onLongClick(v: View?): Boolean {
         class MyDialogInterfaceListener(val id: Int) : DialogInterface.OnClickListener {
 

@@ -1,4 +1,4 @@
-package edu.msudenver.dailydish
+package edu.msudenver.dailydish.Models
 /*
  * CS3013 - Mobile App Dev. - Summer 2022
  * Instructor: Thyago Mota
@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SpoonacularAPI {
@@ -21,15 +21,15 @@ interface SpoonacularAPI {
         @Query("ingredients") ingredients: String,
         @Query("number") number: Int,
         @Query("ranking") ranking: Int
-    ): Call<Array<Response>> // the call must be an Array of Response objects as that is how the results are returned from the api
+    ): Call<Array<RecipeFromIng>> // the call must be an Array of Response objects as that is how the results are returned from the api
 
     //GET call to Spoonacular API to look up a recipe by ID
-    @GET("information?")
+    @GET("{id}/information?")
     fun recipeByID(
-        @Query("id") id: Int,
+        @Path("id") id: Int,
         @Query("apiKey") apiKey: String,
         @Query("includeNutrition") includeNutrition: Boolean = false,
-    )
+    ): Call<RecipeById>
 
     companion object {
         val BASE_URL = "https://api.spoonacular.com/recipes/"
