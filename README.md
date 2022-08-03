@@ -2,10 +2,10 @@
 ### An android application for recipe inspiration based on what you already have at home!
 
 
-### Developed By for MSU Denver's CS-3013 Mobile App Development course Summer 2022
-- [Brea Chaney](https://github.com/brearenee)
-- [Karent Correa](https://github.com/karent2222)
-- [Alyssa Williams](https://github.com/chillyssa)
+### Developed as part of MSU Denver's CS-3013 Mobile App Development course Summer 2022 by: 
+#### [Brea Chaney](https://github.com/brearenee)
+#### [Karent Correa](https://github.com/karent2222)
+#### [Alyssa Williams](https://github.com/chillyssa)
 
 ### Libraries and APIs Used
 [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
