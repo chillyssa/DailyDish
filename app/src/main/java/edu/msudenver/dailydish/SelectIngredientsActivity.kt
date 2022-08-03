@@ -113,7 +113,6 @@ class SelectIngredientsActivity : AppCompatActivity() {
             val intent = Intent(this, RecipeActivity::class.java)
             intent.putExtra("selectedIngredientList", selectedIngredientList)
             println(selectedIngredientList)
-            println("TEST")
             startActivity(intent)
         }
     }
