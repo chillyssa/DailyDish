@@ -1,12 +1,12 @@
-package edu.msudenver.dailydish
+package edu.msudenver.dailydish.Models
 /*
  * CS3013 - Mobile App Dev. - Summer 2022
  * Instructor: Thyago Mota
  * Student(s): Brea Chaney, Karent Correa and Alyssa Williams
- * Description: DailyDish - APIModel holds data class for Response from API request
+ * Description: DailyDish - RecipeFromIng holds data class for Search By Ingredient response
  */
 
-data class Response(
+data class RecipeFromIng(
     var id: Int,
     var image: String,
     var imageType: String,

@@ -8,31 +8,30 @@ package edu.msudenver.dailydish
 
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.msudenver.dailydish.Models.DBHelper
 import edu.msudenver.dailydish.Models.Ingredient
-import edu.msudenver.dailydish.Models.RecipeById
-import kotlinx.android.synthetic.main.recipe_list.view.*
+import edu.msudenver.dailydish.Models.RecipeFromIng
+import edu.msudenver.dailydish.Models.SpoonacularAPI
 import retrofit2.Call
 import retrofit2.Callback
 
-class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array<Response>> {
+class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array<RecipeFromIng>> {
 
     lateinit var recyclerView: RecyclerView
     lateinit var dbHelper: DBHelper
     lateinit var db: SQLiteDatabase
     private val ISO_FORMAT = DBHelper.ISO_FORMAT
-    val ingredientNames = mutableListOf<String>()
+    var ingredientNames = mutableListOf<String>()
     var recipeID = ""
 
     // Create the recipe holder view for the recycler view for all recipe information to display
@@ -45,7 +44,10 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
     }
 
     //RecipeAdapter uses the Response data to set the view to the recipe information
-    inner class RecipeAdapter(var recipeByIng: Array<Response>, var onClickListener: View.OnClickListener) :
+    inner class RecipeAdapter(
+        var recipeByIng: Array<RecipeFromIng>,
+        var onClickListener: View.OnClickListener
+    ) :
         RecyclerView.Adapter<RecipeHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
@@ -77,9 +79,7 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
-
-
-        //get the intent.
+        //get the intent from SelectIngredientsActivity
         ingredientNames = intent.getStringArrayListExtra("selectedIngredientList")!!
 
 
@@ -88,25 +88,27 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
         recyclerView = findViewById<RecyclerView>(R.id.recipeRV)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Call to retrieve all ingredient names from ingredients table to use as query string
-      //  retrieveIngName()
+        // ONLY USED FOR TESTING: Call to retrieve all ingredient names from ingredients table to use as query string
+        // retrieveIngName()
 
-        //TODOd: Create SpoonacularAPI object to make api calls
+        // Create SpoonacularAPI object to make api calls
         val spnAPI = SpoonacularAPI.create()
-        //concatenate ingredient names from ingredients table into query string
+
+        // Concatenate ingredient names from ingredients table into query string
         var query = ""
-        for(name in ingredientNames){
+
+        for (name in ingredientNames) {
             query += "${name.replace("\\s".toRegex(), "")},"
         }
+        query = query.replace(",  $", "")
+        println("INGREDIENTS FOR QUERY: $query")
         val apiKey = BuildConfig.API_KEY //reference to hidden API key in local.properties
 
-        //TODOd: Call to spn to get recipes by ingredients
+        // Call to spn to get recipes by ingredients
         val call = spnAPI.findByIngredients(apiKey, query, 10, 1)
         call.enqueue(this)
 
-        //TODO: Call to spn by recipe id to get url and send user to external url via intents
-
-        // ON click of newSearch button, return to SelectIngredients Activity
+        // On click of newSearch button, return to SelectIngredients Activity
         val newSearchBtn: Button = findViewById(R.id.newSearchBtn)
         newSearchBtn.setOnClickListener {
             val intent = Intent(this, SelectIngredientsActivity::class.java)
@@ -114,22 +116,22 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
         }
     }
 
-    //SpoonacularApi response is an array of objects, so the response using retrofit needs to be an array of Response types
+    // SpoonacularApi response is an array of objects, so the response using retrofit needs to be an array of Response types
     override fun onResponse(
-        call: Call<Array<Response>?>,
-        response: retrofit2.Response<Array<Response>?>
+        call: Call<Array<RecipeFromIng>?>,
+        response: retrofit2.Response<Array<RecipeFromIng>?>
     ) {
         val res = response.body()!!
-        // if response not null passes the result set into the recipe adapter to display the resulting data in the view elements
-        if(res !=null){
-
+        // if response array is not empty, pass the result set into the recipe adapter to display the resulting data in the view elements
+        if (res.isNotEmpty()) {
             recyclerView.adapter = RecipeAdapter(res, this)
             // grab a reference to the recipe ID.
-            for(response in res.iterator()){
+            for (response in res.iterator()) {
                 recipeID = response.id.toString()
                 println("RECIPE ID: $recipeID")
             }
-        } else{
+        } else {
+            // Else alert the user that there was no response from the api call
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Your search returned no results :(")
             alertDialogBuilder.setCancelable(true)
@@ -138,8 +140,8 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
 
     }
 
-    // Prints/Displays a corresponding error message if an error occurs.
-    override fun onFailure(call: Call<Array<Response>?>, t: Throwable) {
+    // If there is a failure in the api call, alert the user and print the details of the failure
+    override fun onFailure(call: Call<Array<RecipeFromIng>?>, t: Throwable) {
         println("ERROR: ${t.message}")
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setMessage("There was an error with your search :(\nPlease Try Again\n${t.message}")
@@ -148,7 +150,7 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
     }
 
 
-    // for all checked checkboxes inside
+    // This function should be used if all ingredient list items are to be passed to api call
     // this function should query the database for the ingredient names; a list of ingredient names should be returned
     fun retrieveIngName(): MutableList<String> {
 
@@ -182,7 +184,7 @@ class RecipeActivity : AppCompatActivity(), View.OnClickListener, Callback<Array
         return ingredientNames
     }
 
-    // TODO: Pass recipe id of clicked recipe to new Activity RecipeByIDActivity in intent and start activity
+    // Pass recipe id of clicked recipe to new Activity RecipeByIDActivity in intent and start activity
     override fun onClick(view: View?) {
         if (view != null) {
             val recipeID = view.findViewById<TextView>(R.id.recipeID).text.toString().toInt()
