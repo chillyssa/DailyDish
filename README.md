@@ -8,9 +8,8 @@
 ##### [Alyssa Williams](https://github.com/chillyssa)
 
 #### Libraries and APIs Used
-[Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
-
-[Spoonacular Food API](https://spoonacular.com/food-api) - The only food API you'll ever need
+- [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
+- [Spoonacular Food API](https://spoonacular.com/food-api) - The only food API you'll ever need
 
 #### Additional Dependencies (not built in)
 Add these to your app/build.gradle:
